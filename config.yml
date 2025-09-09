@@ -1,0 +1,67 @@
+# 示例配置文件
+mappings:
+  # 用户数据转换
+  - source_path: "users.#"
+    target_path: "customers_nums"
+    type: "int"
+  # 用户角色枚举映射
+  - source_path: "users.#.role"
+    target_path: "customers.#.role_code"
+    type: "int"
+    enum_map:
+      "admin": 100
+      "editor": 200
+      "viewer": 300
+      "guest": 400
+    enum_default: 999
+  # 创建时间格式转换
+  - source_path: "users.#.created_at"
+    target_path: "customers.#.join_date"
+    type: "time"
+    time_format: ""
+    target_time_format: "2006-01-02"
+    timezone: "Asia/Shanghai"
+
+  # 产品类别枚举映射
+  - source_path: "products.#.category"
+    target_path: "items.#.category_id"
+    type: "int"
+    enum_map:
+      "electronics": 10
+      "clothing": 20
+      "books": 30
+      "food": 40
+    enum_default: 99
+
+  # 折扣处理
+  - source_path: "products.#.discount"
+    target_path: "items.#.promotion"
+    type: "string"
+    default_value: 0
+
+  # 订单状态枚举映射
+  - source_path: "orders.#.status"
+    target_path: "transactions.#.status_desc"
+    type: "string"
+    enum_map:
+      "pending": "Pending Processing"
+      "processing": "Processing"
+      "shipped": "Shipped"
+      "delivered": "Delivered"
+      "cancelled": "Cancelled"
+    enum_default: "Unknown"
+
+  # 订单日期格式转换
+  - source_path: "orders.#.order_date"
+    target_path: "transactions.#.transaction_date"
+    type: "time"
+    time_format: "2006-01-02T15:04:05Z"
+    target_time_format: "2006-01-02 15:04"
+    timezone: "Asia/Shanghai"
+
+  # 产品规格部分字段映射
+  - source_path: "products.#.details.specs"
+    target_path: "items.#.specifications"
+  # 用户原始备份
+  - source_path: "users"
+    target_path: "users_ori"
